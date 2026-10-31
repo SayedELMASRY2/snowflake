@@ -1,0 +1,94 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Cleaned and typed customer staging model."
+    columns:
+      - name: customer_id
+        description: "Primary key for customers."
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Full name of the customer, trimmed."
+        tests:
+          - not_null
+      - name: email
+        description: "Normalized lowercase customer email address."
+      - name: city
+        description: "Customer city (null when missing in raw data)."
+      - name: signup_date
+        description: "Customer registration date."
+        tests:
+          - not_null
+
+  - name: stg_products
+    description: "Cleaned and typed product catalog staging model."
+    columns:
+      - name: product_id
+        description: "Primary key for products."
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: "Trimmed product display name."
+        tests:
+          - not_null
+      - name: category
+        description: "Product category."
+        tests:
+          - not_null
+      - name: price
+        description: "Unit price for the product, verified positive."
+        tests:
+          - not_null
+
+  - name: stg_orders
+    description: "Cleaned, standardized, and deduplicated order transactions staging model."
+    columns:
+      - name: order_id
+        description: "Primary key for orders."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Foreign key referencing valid customers."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+      - name: product_id
+        description: "Foreign key referencing valid products."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_id
+      - name: quantity
+        description: "Number of units ordered, strictly positive."
+        tests:
+          - not_null
+      - name: order_date
+        description: "Date the transaction occurred."
+        tests:
+          - not_null
+      - name: raw_order_status
+        description: "Original status string from raw ingestion for auditability."
+      - name: order_status
+        description: "Standardized order status (completed, pending, cancelled)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['completed', 'pending', 'cancelled']
+
+  - name: stg_rejected_orders
+    description: "Audit table containing raw order rows excluded from staging due to quality validation failures."
+    columns:
+      - name: rejection_reason
+        description: "Specific reason code explaining why the record was rejected."
+        tests:
+          - not_null

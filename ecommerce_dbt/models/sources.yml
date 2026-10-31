@@ -1,0 +1,52 @@
+version: 2
+
+sources:
+  - name: raw
+    database: ECOMMERCE_DB
+    schema: RAW
+    description: "Raw ingested e-commerce operational data from CSV files."
+    tables:
+      - name: customers
+        identifier: CUSTOMERS
+        description: "Raw customer records containing profile and registration data."
+        columns:
+          - name: customer_id
+            description: "Raw unique identifier for each customer."
+          - name: customer_name
+            description: "Full name of the customer."
+          - name: email
+            description: "Customer email address."
+          - name: city
+            description: "Customer residential city."
+          - name: signup_date
+            description: "Date when customer signed up."
+
+      - name: products
+        identifier: PRODUCTS
+        description: "Raw catalog of products offered in the e-commerce store."
+        columns:
+          - name: product_id
+            description: "Raw unique identifier for each product."
+          - name: product_name
+            description: "Descriptive name of the product item."
+          - name: category
+            description: "Product category (Accessories, Computers, Displays, Audio, Storage)."
+          - name: price
+            description: "Standard unit price in currency units."
+
+      - name: orders
+        identifier: ORDERS
+        description: "Raw transactional order entries."
+        columns:
+          - name: order_id
+            description: "Identifier for the transaction."
+          - name: customer_id
+            description: "Foreign key reference to raw customers."
+          - name: product_id
+            description: "Foreign key reference to raw products."
+          - name: quantity
+            description: "Quantity purchased (may contain raw decimals, negatives, or nulls)."
+          - name: order_date
+            description: "Date the order was placed."
+          - name: status
+            description: "Raw order status (completed, pending, shipped, cancelled)."

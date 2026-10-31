@@ -1,0 +1,26 @@
+product_id,product_name,category,price
+1,Wireless Mouse,Accessories,250.0
+2,Mechanical Keyboard,Accessories,1250.0
+3,USB-C Hub,Accessories,850.0
+4,Laptop Stand,Accessories,600.0
+5,Webcam,Accessories,1450.0
+6,Laptop 14-inch,Computers,22000.0
+7,Laptop 16-inch,Computers,31500.0
+8,Desktop PC,Computers,28000.0
+9,Tablet 10-inch,Computers,9500.0
+10,Monitor 24-inch,Displays,6200.0
+11,Monitor 27-inch,Displays,9800.0
+12,Portable Monitor,Displays,7200.0
+13,USB Headset,Audio,750.0
+14,Bluetooth Speaker,Audio,1800.0
+15,Noise-Cancelling Headphones,Audio,4200.0
+16,USB Microphone,Audio,2300.0
+17,External SSD 1TB,Storage,3900.0
+18,External HDD 2TB,Storage,2800.0
+19,USB Flash Drive 128GB,Storage,450.0
+20,Memory Card 256GB,Storage,900.0
+21,Laptop Charger,Accessories,1100.0
+22,Laptop Backpack,Accessories,1600.0
+23,Graphics Tablet,Computers,5400.0
+24,Docking Station,Accessories,3200.0
+25,Network Adapter,Accessories,550.0

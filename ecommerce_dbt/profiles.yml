@@ -1,0 +1,14 @@
+ecommerce_snowflake:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT', 'UTIUWFL-VV06936') }}"
+      user: "{{ env_var('SNOWFLAKE_USER', 'SAYED.ELMASRI2004@GMAIL.COM') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE', 'ACCOUNTADMIN') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'ECOMMERCE_WH') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE', 'ECOMMERCE_DB') }}"
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'PUBLIC') }}"
+      threads: 4
+      client_session_keep_alive: False

@@ -1,0 +1,116 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Core transactional fact model joined with customer and product dimensions. Revenue is recognized only for completed orders."
+    columns:
+      - name: order_id
+        description: "Primary key for fact orders."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Foreign key reference to customer dimension."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+      - name: product_id
+        description: "Foreign key reference to product dimension."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_id
+      - name: product_category
+        description: "Product category classification."
+        tests:
+          - not_null
+      - name: unit_price
+        description: "Product unit selling price at order time."
+        tests:
+          - not_null
+      - name: quantity
+        description: "Number of units purchased in this order."
+        tests:
+          - not_null
+      - name: order_date
+        description: "Date the order was created."
+        tests:
+          - not_null
+      - name: order_status
+        description: "Standardized order status (completed, pending, cancelled)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['completed', 'pending', 'cancelled']
+      - name: gross_revenue
+        description: "Gross value calculated as quantity * unit_price."
+        tests:
+          - not_null
+      - name: recognized_revenue
+        description: "Recognized earned revenue (equal to gross_revenue if completed, 0.00 otherwise)."
+        tests:
+          - not_null
+
+  - name: mart_customer_summary
+    description: "Analytical summary mart at customer grain detailing total order volume and recognized spending."
+    columns:
+      - name: customer_id
+        description: "Customer identifier, uniquely identifying each customer."
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+      - name: customer_name
+        description: "Full customer name."
+        tests:
+          - not_null
+      - name: total_orders
+        description: "Total count of orders placed by customer."
+        tests:
+          - not_null
+      - name: completed_orders
+        description: "Count of successfully completed orders placed by customer."
+        tests:
+          - not_null
+      - name: total_recognized_spending
+        description: "Sum of recognized spending for completed orders."
+        tests:
+          - not_null
+
+  - name: mart_category_sales
+    description: "Analytical summary mart grouped by product category showing order counts across all statuses and recognized revenue."
+    columns:
+      - name: category
+        description: "Product category name."
+        tests:
+          - unique
+          - not_null
+      - name: total_orders
+        description: "Total order transactions associated with products in this category."
+        tests:
+          - not_null
+      - name: completed_orders
+        description: "Count of completed orders in this category."
+        tests:
+          - not_null
+      - name: pending_orders
+        description: "Count of pending orders in this category."
+        tests:
+          - not_null
+      - name: cancelled_orders
+        description: "Count of cancelled orders in this category."
+        tests:
+          - not_null
+      - name: total_recognized_revenue
+        description: "Total earned revenue recognized for completed orders in this category."
+        tests:
+          - not_null

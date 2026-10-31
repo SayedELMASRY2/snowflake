@@ -1,0 +1,44 @@
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Secrets & Local Environment Configurations
+.env
+.env.*
+!*.example
+
+# Snowflake Key Pairs
+*.p8
+*.pub
+.snowflake/
+
+# dbt Artifacts & Runtime Logs
+**/target/
+**/dbt_packages/
+**/logs/
+**/.user.yml
+*.log
+
+# IDE & OS Artifacts
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Quarantine Directories
+quarantine/
+.quarantine/
+
+# Assignment Tasks & Specs
+task/
+*.pdf
